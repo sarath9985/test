@@ -4,4 +4,4 @@ metadata:
   name: nginx-conf
 data:
   index.html: |
-    Hello world test 
+    Hello world webhook test 
