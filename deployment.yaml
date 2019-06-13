@@ -6,6 +6,11 @@ metadata:
     app: nginx
 spec:
   replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
       app: nginx
@@ -16,17 +21,20 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx
+        image: sarath204/test:test-2
         ports:
         - containerPort: 80
-        volumeMounts:
-        - mountPath: /usr/share/nginx/html # mount nginx-conf volumn to /etc/nginx
-          readOnly: true
-          name: nginx-conf
-      volumes:
-      - name: nginx-conf
-        configMap:
-          name: nginx-conf # place ConfigMap `nginx-conf` on /etc/nginx
-          items:
-            - key: index.html
-              path: index.html
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: test
+#        volumeMounts:
+#        - mountPath: /usr/share/nginx/html # mount nginx-conf volumn to /etc/nginx
+#          readOnly: true
+#          name: nginx-conf
+#      volumes:
+#      - name: nginx-conf
+#        configMap:
+#          name: nginx-conf # place ConfigMap `nginx-conf` on /etc/nginx
+#          items:
+#            - key: index.html
+##              path: index.html
